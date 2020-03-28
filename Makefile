@@ -8,20 +8,22 @@ IMG = "$(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG)"
 VERSION:= $(shell ./version.sh)
 .DEFAULT_GOAL := build
 
-build: 
+build:
+	@echo '[default]: building local octoprint image with all default options'
+	@docker build -t octoprint .
+
+buildctl: 
 	@echo '[buildctl]: building image: $(IMG) for architecture: $(PLATFORM)'
 	@buildctl build --frontend dockerfile.v0 \
-		--frontend-opt platform=linux/$(PLATFORM) \
-		--frontend-opt filename=./$(DOCKERFILE_LOCATION) \
-		--exporter image \
-		--exporter-opt name=$(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG)-$(PLATFORM) \
-		--exporter-opt push=false \
+		--opt platform=linux/$(PLATFORM) \
+		--opt filename=./$(DOCKERFILE_LOCATION) \
+		--output type=image,name=${IMG}-$(PLATFORM),push=false \
 		--local dockerfile=. \
 		--local context=.
 
 buildx:
 	@echo '[buildx]: building image: $(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG) for all architectures'
-	@docker build --platform linux/amd64,linux/arm64 \
+	@docker buildx build --platform linux/amd64,linux/arm64 \
 		--build-arg $(PYTHON_IMAGE_TAG) -t $(DOCKER_USER)/$(IMAGE):$(TAG) .
 
 validate:
