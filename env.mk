@@ -1,8 +1,8 @@
  # Configs for build and test
  REGISTRY?=docker.io
  DOCKER_USERNAME?=octoprint
- IMAGE?=octoprint
+ IMAGE?=octoprint/octoprint
  TAG?=buildtest
  PLATFORM?=arm64
  DOCKERFILE_LOCATION?="./Dockerfile"
- PYTHON_IMAGE_TAG?=2.7-slim-buster
+ PYTHON_BASE_IMAGE?=2.7-slim-buster
