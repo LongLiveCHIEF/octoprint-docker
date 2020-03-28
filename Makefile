@@ -10,12 +10,7 @@ OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
 buildx = "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
 .DEFAULT_GOAL := build
 
-install:
-	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
-	curl --silent -L ${buildx} > ~/.docker/buildx
-	chmod a+x ~/.docker/buidx
-
-prepare: install
+prepare: 
 	docker buildx create --use
 	docker buildx ls
 
