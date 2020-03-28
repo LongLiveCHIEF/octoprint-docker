@@ -5,6 +5,7 @@ dist: bionic
 
 env:
   - DOCKER_CLI_EXPERIMENTAL=enabled
+  - PYTHON_BASE_IMAGE=3.8-slim-buster TAG=python3
 
 before_install:
   - sudo rm -rf /var/lib/apt/lists/*
