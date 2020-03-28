@@ -3,10 +3,10 @@
 cnf ?= env.mk
 include $(cnf)
 IMG = "$(REGISTRY)/$(IMAGE):$(TAG)"
+python = "--build-arg PYTHON_BASE_IMAGE=$(PYTHON_BASE_IMAGE)"
 
-# get the version of the latest stable release for build
-BUILDX_VERSION:= $(shell ./version.sh "docker/buildx")
 OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
+
 .DEFAULT_GOAL := build
 
 prepare: 
@@ -19,9 +19,9 @@ build:
 buildx:
 	@echo '[buildx]: building image: ${IMG} for all architectures'
 	@docker buildx build --platform linux/amd64,linux/arm64/v8 \
-		--build-arg $(PYTHON_BASE_IMAGE) -t ${IMG} .
+		${python} -t ${IMG} .
 
 buildx-push:
 	@echo '[buildx]: building and pushing images:\n ${IMG} for all supported architectures\n'
 	docker buildx build --push --platform linux/arm64,linux/amd64 \
-	--progress plain --build-arg $(PYTHON_BASE_IMAGE) -t ${IMG} .
+	--progress plain ${python} -t ${IMG} .
