@@ -14,7 +14,7 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && mkdir -p /opt \
   && tar -xJf "ffmpeg-release-$ARCH-static.tar.xz" --strip-components=1 -C /opt
 
-FROM python:${PYTHON_IMAGE_TAG} AS cura-compiler
+FROM python:${PYTHON_BASE_IMAGE} AS cura-compiler
 
 ARG CURA_VERSION
 ENV CURA_VERSION ${CURA_VERSION:-15.04.6}
@@ -28,7 +28,7 @@ WORKDIR /opt
 RUN make
 
 # build ocotprint
-FROM python:${PYTHON_IMAGE_TAG} AS compiler
+FROM python:${PYTHON_BASE_IMAGE} AS compiler
 
 ARG tag
 ENV tag ${tag:-master}
@@ -48,7 +48,7 @@ WORKDIR /opt/venv
 RUN python setup.py install
 
 
-FROM python:${PYTHON_IMAGE_TAG} AS build
+FROM python:${PYTHON_BASE_IMAGE} AS build
 LABEL description="The snappy web interface for your 3D printer"
 LABEL authors="longlivechief <chief@hackerhappyhour.com>, badsmoke <dockerhub@badcloud.eu>"
 LABEL issues="github.com/OcotPrint/docker/issues"
