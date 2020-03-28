@@ -18,5 +18,7 @@ before_install:
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME"
   - docker version
-  - make prepare
+  - docker buildx create --name octoprint
+  - docker buildx use octoprint
+  - docker buildx ls
   - make buildx-push
