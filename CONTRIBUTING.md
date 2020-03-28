@@ -35,20 +35,15 @@ octoprint/octoprint:python3
 
 **Build Configurations**
 
-The `make` command will pull in the `config.env` file, and 
+The `make` command will pull in the `env.mk` file, and 
 utilize the variables within during the various stages of build,
 test, and release.
 
 To build alternate infrastructures, or get use different base images
-for end-use, you can either change the variables in `config.env`, or
-provide alternate saved configsets by using `cnf=<some_other_config.env`
-argument supplied to `make`. 
+for end-use, you have a few options:
 
-For example, let's say you want to build using the full `buster` instead of the default `slim`, and publish to your own private repo. You could create a `private_buster_full.env` file, supplying the content below:
-
-```
-IMAGE=my.private.repo:5000/someuser/octoprint
-PYTHON_IMAGE_TAG=buster
-```
-
-Then run: `make cnf="private_buster_full.env" build-stable`, which would result in a python 3 based image with the tag `my.private.repo:5000/someuser/octoprint:<latest stable version>`
+- change the variables in `env.mk`
+- provide alternate saved configsets by using `cnf=<some_other_env.mk`
+argument supplied to `make` (and creating/savig `some_other_env.mk`) 
+- set the variables found in `env.mk` in the build environment or supply them to command line
+to override the default configs
