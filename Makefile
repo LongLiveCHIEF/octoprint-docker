@@ -34,4 +34,4 @@ buildx:
 buildx-push:
 	@echo '[buildx]: building and pushing images:\n $(REGISTRY)/$(DOCKER_USERNAME)/$(IMAGE):$(TAG) for all supported architectures\n'
 	docker buildx build --push --platform linux/arm64,linux/amd64 \
-	-t $(IMG) .
+	--progress plain -t $(IMG) .
