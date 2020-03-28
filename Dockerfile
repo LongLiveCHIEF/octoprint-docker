@@ -2,11 +2,12 @@ ARG PYTHON_IMAGE_TAG=2.7-slim-buster
 
 FROM buildpack-deps:curl AS ffmpeg
 RUN apt-get update && apt-get install -y xz-utils
+RUN echo "$(dpkg --print-architecture)"
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
-  amd64) ARCH='x64';; \
+  amd64) ARCH='amd64';; \
   arm64) ARCH='arm64';; \
-  *) echo "unsupported architecture"; exit 1 ;; \
+  *) echo "unsupported architecture: $(dpkg --print-architecture)"; exit 1 ;; \
   esac \
   && set -ex \
   && curl -fsSLO "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$ARCH-static.tar.xz" \

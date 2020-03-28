@@ -36,6 +36,7 @@ buildx:
 	@docker buildx build --platform linux/amd64,linux/arm64/v8 \
 		--build-arg $(PYTHON_IMAGE_TAG) -t $(DOCKER_USER)/$(IMAGE):$(TAG) .
 
-validate:
-	@echo ${buildx}
-	@echo latest stable tag: ${OCTOPRINT_VERSION}
+buildx-push:
+	@echo '[buildx]: building and pushing images:\n $(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG) for all supported architectures\n'
+	docker buildx build --push --platform linux/arm64/v8,linux/amd64 \
+	-t $(IMG) .
