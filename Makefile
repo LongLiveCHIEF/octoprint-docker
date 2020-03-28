@@ -12,8 +12,8 @@ buildx = "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/b
 
 install:
 	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
-	curl --silent -L ${buildx} > ~/.docker/cli-plugins/docker-buildx
-	chmod a+x ~/.docker/cli-plugins/docker-buidx
+	curl --silent -L ${buildx} > ~/.docker/buildx
+	chmod a+x ~/.docker/buidx
 
 prepare: install
 	docker buildx create --use
