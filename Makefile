@@ -15,8 +15,9 @@ install:
 	curl --silent -L ${buildx} > ~/.docker/cli-plugins/docker-buildx
 	chmod a+x ~/.docker/cli-plugins/docker-buidx
 
-prepare:
+prepare: install
 	docker buildx create --use
+	docker buildx ls
 
 build:
 	@echo '[default]: building local octoprint image with all default options'
