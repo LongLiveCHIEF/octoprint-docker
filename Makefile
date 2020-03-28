@@ -5,8 +5,18 @@ include $(cnf)
 IMG = "$(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG)"
 
 # get the version of the latest stable release for build
-VERSION:= $(shell ./version.sh)
+BUILDX_VERSION:= $(shell ./version.sh "docker/buildx")
+OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
+buildx = "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
 .DEFAULT_GOAL := build
+
+install:
+	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
+	curl --silent -L ${buildx} > ~/.docker/cli-plugins/docker-buildx
+	chmod a+x ~/.docker/cli-plugins/docker-buidx
+
+prepare:
+	docker buildx create --use
 
 build:
 	@echo '[default]: building local octoprint image with all default options'
@@ -23,8 +33,9 @@ buildctl:
 
 buildx:
 	@echo '[buildx]: building image: $(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG) for all architectures'
-	@docker buildx build --platform linux/amd64,linux/arm64 \
+	@docker buildx build --platform linux/amd64,linux/arm64/v8 \
 		--build-arg $(PYTHON_IMAGE_TAG) -t $(DOCKER_USER)/$(IMAGE):$(TAG) .
 
 validate:
-	@echo latest stable tag: ${VERSION}
+	@echo ${buildx}
+	@echo latest stable tag: ${OCTOPRINT_VERSION}
