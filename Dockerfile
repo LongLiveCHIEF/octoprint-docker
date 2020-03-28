@@ -19,7 +19,7 @@ ARG CURA_VERSION
 ENV CURA_VERSION ${CURA_VERSION:-15.04.6}
 
 RUN apt-get update && apt-get install -y g++ make curl
-RUN curl -fsSLO --comporessed --retry 3 --retry-delay 10 \
+RUN curl -fsSLO --compressed --retry 3 --retry-delay 10 \
   https://github.com/Ultimaker/CuraEngine/archive/${CURA_VERSION}.tar.gz \
   && mkdir -p /opt \
   && tar -xzf ${CURA_VERSION}.tar.gz --strip-components=1 -C /opt --no-same-owner
