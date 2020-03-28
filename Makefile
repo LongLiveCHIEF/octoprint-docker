@@ -7,7 +7,6 @@ IMG = "$(REGISTRY)/$(DOCKER_USERNAME)/$(IMAGE):$(TAG)"
 # get the version of the latest stable release for build
 BUILDX_VERSION:= $(shell ./version.sh "docker/buildx")
 OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
-buildx = "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
 .DEFAULT_GOAL := build
 
 prepare: 
