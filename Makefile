@@ -2,7 +2,7 @@
 # You can change the default config with `make cnf="config_special.env" build`
 cnf ?= env.mk
 include $(cnf)
-IMG = "$(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG)"
+IMG = "$(REGISTRY)/$(DOCKER_USERNAME)/$(IMAGE):$(TAG)"
 
 # get the version of the latest stable release for build
 BUILDX_VERSION:= $(shell ./version.sh "docker/buildx")
@@ -33,11 +33,11 @@ buildctl:
 		--local context=.
 
 buildx:
-	@echo '[buildx]: building image: $(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG) for all architectures'
+	@echo '[buildx]: building image: $(REGISTRY)/$(DOCKER_USERNAME)/$(IMAGE):$(TAG) for all architectures'
 	@docker buildx build --platform linux/amd64,linux/arm64/v8 \
 		--build-arg $(PYTHON_IMAGE_TAG) -t $(DOCKER_USER)/$(IMAGE):$(TAG) .
 
 buildx-push:
-	@echo '[buildx]: building and pushing images:\n $(REGISTRY)/$(DOCKER_USER)/$(IMAGE):$(TAG) for all supported architectures\n'
+	@echo '[buildx]: building and pushing images:\n $(REGISTRY)/$(DOCKER_USERNAME)/$(IMAGE):$(TAG) for all supported architectures\n'
 	docker buildx build --push --platform linux/arm64,linux/amd64 \
 	-t $(IMG) .

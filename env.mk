@@ -1,6 +1,6 @@
  # Configs for build and test
  REGISTRY?=docker.io
- DOCKER_USER?=octoprint
+ DOCKER_USERNAME?=octoprint
  IMAGE?=octoprint
  TAG?=buildtest
  PLATFORM?=arm64
