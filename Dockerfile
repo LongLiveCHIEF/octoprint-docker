@@ -1,6 +1,7 @@
 ARG PYTHON_IMAGE_TAG=2.7-slim-buster
 
 FROM buildpack-deps:curl AS ffmpeg
+RUN apt-get update && apt-get install -y xz-utils
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
   amd64) ARCH='x64';; \
