@@ -5,7 +5,6 @@ dist: bionic
 
 env:
   - DOCKER_CLI_EXPERIMENTAL=enabled
-  - DOCKER_BUILDKIT=1
 
 addons:
   apt:
