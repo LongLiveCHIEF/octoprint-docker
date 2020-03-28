@@ -10,7 +10,7 @@ OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
 .DEFAULT_GOAL := build
 
 prepare: 
-	docker buildx create --use
+	@docker buildx create --use
 	docker buildx ls
 
 build:
