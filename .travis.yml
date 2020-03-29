@@ -18,4 +18,5 @@ before_install:
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker version
+  - docker buildx create --use
   - make buildx-push
