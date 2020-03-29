@@ -9,8 +9,7 @@ OCTOPRINT_VERSION:= $(shell ./version.sh "foosel/OctoPrint")
 .DEFAULT_GOAL := build
 
 prepare: 
-	@docker buildx install
-	@docker buildx create --use --name octoprint
+	@docker buildx create --use
 
 build:
 	@echo '[default]: building local octoprint image with all default options'
@@ -18,12 +17,12 @@ build:
 
 buildx: prepare
 	@echo '[buildx]: building image: ${IMG} for all architectures'
-	@docker build --platform linux/amd64,linux/arm64/v8 \
+	@docker buildx build --platform linux/amd64,linux/arm64/v8 \
 		--build-arg PYTHON_BASE_IMAGE=$(PYTHON_BASE_IMAGE) \
 		--progress plain -t ${IMG} .
 
 buildx-push: prepare
-	@echo '[buildx]: building and pushing images:\n ${IMG} for all supported architectures\n'
-	docker build --push --platform linux/arm64,linux/amd64 \
+	@echo '[buildx]: building and pushing images: ${IMG} for all supported architectures'
+	docker buildx build --push --platform linux/arm64,linux/amd64 \
 		--build-arg PYTHON_BASE_IMAGE=$(PYTHON_BASE_IMAGE) \
 		--progress plain -t ${IMG} .
