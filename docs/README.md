@@ -32,7 +32,7 @@ The examples used in these docs will all use experimental features enabled.
 ## Building your own OctoPrint image
 
 In some circumstances, the best approach for running octoprint in a container
-will be to build off of the base `octoprint/octoprint` image and add your own 
+will be to build off of the base `ghcr.io/octoprint/octoprint` image and add your own 
 customizations. Here are a few common scenarios you might find yourself wanting to do this:
 
 - you require additional OS packages for plugins
